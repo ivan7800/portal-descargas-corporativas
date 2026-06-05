@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Descargas Corporativas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F4F2EE;
+    --surface: #FAFAF8;
+    --surface2: #EEECEA;
+    --border: #D8D5CF;
+    --border2: #C5C1BA;
+    --text: #1A1916;
+    --text2: #6B6760;
+    --text3: #9E9A94;
+    --accent: #2D5BE3;
+    --accent-bg: #EEF2FD;
+    --accent-text: #1A3A9E;
+    --badge-bg: #FFF3CD;
+    --badge-text: #92620A;
+    --badge-border: #F5D87A;
+    --radius: 10px;
+    --radius-lg: 14px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141412;
+      --surface: #1C1C1A;
+      --surface2: #242422;
+      --border: #2E2E2B;
+      --border2: #3A3A36;
+      --text: #F0EDE8;
+      --text2: #9E9A94;
+      --text3: #5C5A55;
+      --accent: #5B82F0;
+      --accent-bg: #1A2444;
+      --accent-text: #8BAAF5;
+      --badge-bg: #2A2000;
+      --badge-text: #F5C842;
+      --badge-border: #5C4500;
+    }
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .site-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: #0055A5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-icon svg { fill: white; width: 22px; height: 22px; }
+
+  .logo-name {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .logo-name span {
+    font-weight: 300;
+    color: var(--text2);
+  }
+
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.05em;
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h1 strong { font-weight: 500; }
+
+  .hero p {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  /* CONTROLS */
+  .controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+    max-width: 340px;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    stroke: var(--text3);
+    fill: none;
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 9px 12px 9px 34px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .search-input::placeholder { color: var(--text3); }
+  .search-input:focus { border-color: var(--border2); }
+
+  .filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.12s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--border2);
+    color: var(--text);
+    background: var(--surface);
+  }
+
+  .filter-btn.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+    font-weight: 500;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .stats-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  .stats-count span { color: var(--text); font-weight: 500; }
+
+  /* GRID */
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .app-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    animation: fadeIn 0.2s ease both;
+    position: relative;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .app-card:hover {
+    border-color: var(--border2);
+    box-shadow: var(--shadow);
+  }
+
+  .app-card.hidden { display: none; }
+
+  /* BADGE RECOMENDADO */
+  .badge-rec {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    border: 1px solid var(--badge-border);
+    border-radius: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .app-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .app-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    padding-right: 28px; /* espacio para badge */
+  }
+
+  .app-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .app-tag {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .app-desc {
+    font-size: 12.5px;
+    color: var(--text2);
+    line-height: 1.45;
+  }
+
+  /* VERSIÓN */
+  .app-version {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .app-version::before {
+    content: 'v';
+    opacity: 0.5;
+  }
+
+  .app-platform {
+    font-size: 11px;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .app-platform::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--text3);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .app-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: none;
+    border-radius: 7px;
+    padding: 6px 11px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.12s;
+    white-space: nowrap;
+  }
+
+  .dl-btn:hover { opacity: 0.8; }
+
+  .dl-btn svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  /* NO RESULTS */
+  .no-results {
+    text-align: center;
+    padding: 3rem 0;
+    color: var(--text3);
+    font-size: 14px;
+    display: none;
+  }
+
+  /* FOOTER */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 3rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="3" width="4" height="16" rx="1"/>
+        <rect x="9" y="3" width="9" height="4" rx="1"/>
+        <rect x="9" y="15" width="9" height="4" rx="1"/>
+        <rect x="14" y="7" width="4" height="8" rx="1"/>
+      </svg>
+    </div>
+    <div class="logo-name">Portal <span>/ Descargas Corporativas</span></div>
+  </div>
+  <div class="header-meta" id="header-count">Cargando...</div>
+</header>
+
+<main class="main">
+  <div class="hero">
+    <h1>Descargas<br><strong>corporativas</strong></h1>
+    <p>Acceso directo a las fuentes oficiales de todas las aplicaciones aprobadas por el departamento IT.</p>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input class="search-input" id="search" type="text" placeholder="Buscar aplicación..." autocomplete="off" />
+    </div>
+    <div class="filters" id="filters"></div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stats-count" id="count-label"></div>
+  </div>
+
+  <div class="app-grid" id="grid"></div>
+  <div class="no-results" id="no-results">No se encontraron aplicaciones para esa búsqueda.</div>
+</main>
+
+<footer class="site-footer">
+  Todas las descargas van a la web oficial del fabricante — Departamento IT &middot; <span id="year"></span>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const apps = [
+  // UTILIDADES
+  { name:"7-Zip",            desc:"Compresor de archivos open source",    icon:"🗜️", bg:"#EBF4FF", tag:"Utilidades",    platform:"Windows",          version:"24.09",  rec:false, url:"https://www.7-zip.org/download.html" },
+  { name:"TeamViewer",       desc:"Acceso y control remoto",              icon:"🖥️", bg:"#E1F5FE", tag:"Utilidades",    platform:"Win / Mac / Linux", version:"15.x",   rec:true,  url:"https://www.teamviewer.com/download/" },
+  { name:"AnyDesk",          desc:"Escritorio remoto ligero",             icon:"🔗", bg:"#FBE9E7", tag:"Utilidades",    platform:"Win / Mac / Linux", version:"8.x",    rec:false, url:"https://anydesk.com/download" },
+  { name:"Everything",       desc:"Búsqueda ultrarrápida de archivos",    icon:"🔍", bg:"#FFF8E1", tag:"Utilidades",    platform:"Windows",          version:"1.4.1",  rec:true,  url:"https://www.voidtools.com/downloads/" },
+  { name:"TreeSize Free",    desc:"Analizador de espacio en disco",       icon:"💾", bg:"#E8F5E9", tag:"Utilidades",    platform:"Windows",          version:"4.7",    rec:false, url:"https://www.jam-software.com/treesize_free" },
+  { name:"CrystalDiskInfo",  desc:"Monitor de salud de discos",           icon:"🔮", bg:"#EDE7F6", tag:"Utilidades",    platform:"Windows",          version:"9.3",    rec:false, url:"https://crystalmark.info/en/software/crystaldiskinfo/" },
+  { name:"CPU-Z",            desc:"Info detallada del hardware",          icon:"⚙️", bg:"#F1F8E9", tag:"Utilidades",    platform:"Windows",          version:"2.10",   rec:false, url:"https://www.cpuid.com/softwares/cpu-z.html" },
+
+  // NAVEGADORES
+  { name:"Google Chrome",    desc:"Navegador rápido de Google",           icon:"🌐", bg:"#FEF3E2", tag:"Navegadores",   platform:"Win / Mac / Linux", version:"Última", rec:true,  url:"https://www.google.com/chrome/" },
+  { name:"Mozilla Firefox",  desc:"Navegador libre y privado",            icon:"🦊", bg:"#FFF0E0", tag:"Navegadores",   platform:"Win / Mac / Linux", version:"Última", rec:false, url:"https://www.mozilla.org/firefox/new/" },
+  { name:"Microsoft Edge",   desc:"Navegador corporativo de Microsoft",   icon:"🔷", bg:"#E8F0FE", tag:"Navegadores",   platform:"Win / Mac",         version:"Última", rec:false, url:"https://www.microsoft.com/edge" },
+
+  // COMUNICACIÓN
+  { name:"Zoom",             desc:"Videollamadas y webinars",             icon:"📹", bg:"#E8F0FE", tag:"Comunicación",  platform:"Win / Mac",         version:"6.x",    rec:true,  url:"https://zoom.us/download" },
+  { name:"Microsoft Teams",  desc:"Colaboración y chat corporativo",      icon:"💼", bg:"#EDE7F6", tag:"Comunicación",  platform:"Win / Mac",         version:"Última", rec:true,  url:"https://www.microsoft.com/microsoft-teams/download-app" },
+  { name:"Slack",            desc:"Mensajería de equipo",                 icon:"💬", bg:"#F0EDFF", tag:"Comunicación",  platform:"Win / Mac / Linux", version:"4.x",    rec:false, url:"https://slack.com/downloads" },
+  { name:"Skype",            desc:"Llamadas VoIP y videollamadas",        icon:"📞", bg:"#E3F2FD", tag:"Comunicación",  platform:"Win / Mac",         version:"8.x",    rec:false, url:"https://www.skype.com/get-skype/" },
+  { name:"WhatsApp Desktop", desc:"WhatsApp para escritorio",             icon:"💚", bg:"#E8F5E9", tag:"Comunicación",  platform:"Win / Mac",         version:"Última", rec:false, url:"https://www.whatsapp.com/download" },
+  { name:"Thunderbird",      desc:"Cliente de correo electrónico",        icon:"📧", bg:"#E3F2FD", tag:"Comunicación",  platform:"Win / Mac / Linux", version:"128.x",  rec:false, url:"https://www.thunderbird.net/es-ES/" },
+
+  // PRODUCTIVIDAD
+  { name:"Adobe Reader",     desc:"Visor oficial de PDFs",                icon:"📄", bg:"#FDEEEE", tag:"Productividad", platform:"Win / Mac",         version:"Última", rec:true,  url:"https://get.adobe.com/reader/" },
+  { name:"LibreOffice",      desc:"Suite ofimática gratuita",             icon:"📊", bg:"#E8F5E9", tag:"Productividad", platform:"Win / Mac / Linux", version:"24.8",   rec:false, url:"https://www.libreoffice.org/download/download/" },
+  { name:"Foxit PDF Reader", desc:"Lector de PDF ligero y rápido",        icon:"📋", bg:"#FBE9E7", tag:"Productividad", platform:"Win / Mac",         version:"2024.x", rec:false, url:"https://www.foxit.com/pdf-reader/" },
+  { name:"Notion",           desc:"Notas, wikis y bases de datos",        icon:"📓", bg:"#F5F5F5", tag:"Productividad", platform:"Win / Mac",         version:"Última", rec:false, url:"https://www.notion.so/desktop" },
+  { name:"Obsidian",         desc:"Notas en Markdown con grafos",         icon:"🪨", bg:"#EDE7F6", tag:"Productividad", platform:"Win / Mac / Linux", version:"1.7",    rec:false, url:"https://obsidian.md/download" },
+  { name:"VLC",              desc:"Reproductor multimedia universal",     icon:"🎬", bg:"#FFF3E0", tag:"Productividad", platform:"Win / Mac / Linux", version:"3.0.21", rec:false, url:"https://www.videolan.org/vlc/" },
+
+  // SEGURIDAD
+  { name:"KeePass",          desc:"Gestor de contraseñas local",          icon:"🔑", bg:"#FFF9C4", tag:"Seguridad",    platform:"Windows",          version:"2.57",   rec:true,  url:"https://keepass.info/download.html" },
+  { name:"Bitwarden",        desc:"Gestor de contraseñas en la nube",     icon:"🛡️", bg:"#E8EAF6", tag:"Seguridad",    platform:"Win / Mac / Linux", version:"Última", rec:true,  url:"https://bitwarden.com/download/" },
+  { name:"Malwarebytes",     desc:"Antimalware bajo demanda",             icon:"🦠", bg:"#E0F7FA", tag:"Seguridad",    platform:"Win / Mac",         version:"5.x",    rec:false, url:"https://www.malwarebytes.com/mwb-download" },
+  { name:"VeraCrypt",        desc:"Cifrado de discos y contenedores",     icon:"🔐", bg:"#EFEBE9", tag:"Seguridad",    platform:"Win / Mac / Linux", version:"1.26",   rec:false, url:"https://www.veracrypt.fr/en/Downloads.html" },
+  { name:"Wireshark",        desc:"Análisis de tráfico de red",           icon:"🌊", bg:"#E3F2FD", tag:"Seguridad",    platform:"Win / Mac / Linux", version:"4.4",    rec:false, url:"https://www.wireshark.org/download.html" },
+
+  // DESARROLLO
+  { name:"Visual Studio Code",desc:"Editor de código gratuito de Microsoft",icon:"💻",bg:"#E3F2FD",tag:"Desarrollo",  platform:"Win / Mac / Linux", version:"1.95",   rec:true,  url:"https://code.visualstudio.com/download" },
+  { name:"Notepad++",        desc:"Editor de texto avanzado",             icon:"📝", bg:"#E8F5E9", tag:"Desarrollo",   platform:"Windows",          version:"8.7",    rec:false, url:"https://notepad-plus-plus.org/downloads/" },
+  { name:"Git",              desc:"Control de versiones distribuido",     icon:"🌿", bg:"#FCE4EC", tag:"Desarrollo",   platform:"Win / Mac / Linux", version:"2.47",   rec:true,  url:"https://git-scm.com/downloads" },
+  { name:"Python",           desc:"Lenguaje de programación versátil",    icon:"🐍", bg:"#E8F5E9", tag:"Desarrollo",   platform:"Win / Mac / Linux", version:"3.13",   rec:false, url:"https://www.python.org/downloads/" },
+  { name:"Node.js",          desc:"Entorno de ejecución JavaScript",      icon:"🟢", bg:"#E8F5E9", tag:"Desarrollo",   platform:"Win / Mac / Linux", version:"22 LTS", rec:false, url:"https://nodejs.org/es/download/" },
+  { name:"PuTTY",            desc:"Cliente SSH y Telnet",                 icon:"⌨️", bg:"#EFEBE9", tag:"Desarrollo",   platform:"Windows",          version:"0.82",   rec:false, url:"https://www.putty.org/" },
+  { name:"WinSCP",           desc:"Cliente FTP y SFTP gráfico",           icon:"📡", bg:"#F3E5F5", tag:"Desarrollo",   platform:"Windows",          version:"6.3",    rec:false, url:"https://winscp.net/eng/download.php" },
+  { name:"Postman",          desc:"Testing y documentación de APIs",      icon:"🚀", bg:"#FBE9E7", tag:"Desarrollo",   platform:"Win / Mac / Linux", version:"11.x",   rec:false, url:"https://www.postman.com/downloads/" },
+  { name:"Docker Desktop",   desc:"Contenedores y virtualización",        icon:"🐳", bg:"#E3F2FD", tag:"Desarrollo",   platform:"Win / Mac",         version:"4.36",   rec:false, url:"https://www.docker.com/products/docker-desktop/" },
+  { name:"DBeaver",          desc:"Cliente universal de bases de datos",  icon:"🗄️", bg:"#E8F4FD", tag:"Desarrollo",   platform:"Win / Mac / Linux", version:"24.3",   rec:false, url:"https://dbeaver.io/download/" },
+
+  // RED
+  { name:"Nmap",             desc:"Escáner de red y puertos",             icon:"📡", bg:"#E0F7FA", tag:"Red",          platform:"Win / Mac / Linux", version:"7.95",   rec:false, url:"https://nmap.org/download.html" },
+  { name:"Advanced IP Scanner",desc:"Escáner de red local",              icon:"🔭", bg:"#F1F8E9", tag:"Red",          platform:"Windows",          version:"2.5",    rec:true,  url:"https://www.advanced-ip-scanner.com/es/" },
+  { name:"Angry IP Scanner", desc:"Escaneo rápido de IPs",               icon:"⚡", bg:"#FFF9C4", tag:"Red",          platform:"Win / Mac / Linux", version:"3.9",    rec:false, url:"https://angryip.org/download/" },
+  { name:"FileZilla",        desc:"Cliente FTP multiplataforma",          icon:"📂", bg:"#FBE9E7", tag:"Red",          platform:"Win / Mac / Linux", version:"3.67",   rec:false, url:"https://filezilla-project.org/download.php" },
+];
+
+const allTags = ["Todos", ...new Set(apps.map(a => a.tag))];
+let activeTag = "Todos";
+
+// Render filters
+const filtersEl = document.getElementById("filters");
+allTags.forEach(t => {
+  const btn = document.createElement("button");
+  btn.className = "filter-btn" + (t === "Todos" ? " active" : "");
+  btn.textContent = t;
+  btn.addEventListener("click", () => {
+    activeTag = t;
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    filterApps();
+  });
+  filtersEl.appendChild(btn);
+});
+
+const iconDownload = `<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+
+// Render cards
+const grid = document.getElementById("grid");
+apps.forEach((app, i) => {
+  const card = document.createElement("div");
+  card.className = "app-card";
+  card.dataset.name = app.name.toLowerCase() + " " + app.desc.toLowerCase();
+  card.dataset.tag = app.tag;
+  card.style.animationDelay = (i * 0.018) + "s";
+  card.innerHTML = `
+    ${app.rec ? '<span class="badge-rec">★ Recomendado</span>' : ''}
+    <div class="card-top">
+      <div class="app-icon" style="background:${app.bg}">${app.icon}</div>
+      <div class="app-meta">
+        <div class="app-name">${app.name}</div>
+        <span class="app-tag">${app.tag}</span>
+      </div>
+    </div>
+    <div class="app-desc">${app.desc}</div>
+    <div class="app-footer">
+      <span class="app-version">${app.version}</span>
+      <span class="app-platform">${app.platform}</span>
+    </div>
+    <a class="dl-btn" href="${app.url}" target="_blank" rel="noopener noreferrer">
+      ${iconDownload} Descargar
+    </a>
+  `;
+  grid.appendChild(card);
+});
+
+function filterApps() {
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  const cards = grid.querySelectorAll(".app-card");
+  let visible = 0;
+  cards.forEach(card => {
+    const matchTag = activeTag === "Todos" || card.dataset.tag === activeTag;
+    const matchQ = !q || card.dataset.name.includes(q);
+    const show = matchTag && matchQ;
+    card.classList.toggle("hidden", !show);
+    if (show) visible++;
+  });
+  const label = document.getElementById("count-label");
+  const noRes = document.getElementById("no-results");
+  label.innerHTML = `<span>${visible}</span> aplicaciones`;
+  document.getElementById("header-count").textContent = visible + " APPS";
+  noRes.style.display = visible === 0 ? "block" : "none";
+}
+
+document.getElementById("search").addEventListener("input", filterApps);
+filterApps();
+</script>
+</body>
+</html>
