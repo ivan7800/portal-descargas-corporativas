@@ -1,42 +1,22 @@
 # Portal de Descargas Corporativas
 
-Portal web estático para acceso directo a las descargas oficiales de aplicaciones aprobadas por el departamento IT.
-
-## Características
-
-- 44 aplicaciones en 7 categorías
-- Búsqueda en tiempo real
-- Filtro por categoría
-- Badge "Recomendado" para apps prioritarias
-- Versión y plataforma por app
-- Dark mode automático
-- Sin dependencias externas (salvo Google Fonts)
+Portal HTML/CSS/JavaScript listo para GitHub Pages.
 
 ## Uso
 
-Abrir `index.html` directamente en el navegador, o publicar vía GitHub Pages.
+1. Abre `index.html` directamente en el navegador, o súbelo a GitHub Pages.
+2. Usa `+ Añadir app` para crear aplicaciones manuales.
+3. Las apps manuales se guardan localmente en el navegador mediante `localStorage`.
+4. Usa `Exportar JSON` para guardar tus apps manuales.
+5. Usa `Importar JSON` para recuperarlas en otro navegador/equipo.
 
-## GitHub Pages
+## Archivos
 
-1. Ve a **Settings → Pages**
-2. Source: `Deploy from a branch`
-3. Branch: `main` / `root`
-4. Guardar — disponible en `https://<usuario>.github.io/<repo>/`
+- `index.html`: aplicación completa.
+- `apps-manuales-ejemplo.json`: ejemplo de importación.
+- `.gitignore`: exclusiones básicas.
+- `LICENSE`: licencia MIT.
 
-## Estructura
+## Nota
 
-```
-index.html   ← portal completo (single-file)
-README.md
-```
-
-## Mantenimiento
-
-Todas las apps están definidas en el array `apps` dentro del `<script>` de `index.html`. Cada entrada tiene:
-
-```js
-{ name, desc, icon, bg, tag, platform, version, rec, url }
-```
-
-- `rec: true` activa el badge "★ Recomendado"
-- `version` se muestra en la tarjeta (actualizar manualmente)
+No requiere servidor, build, npm ni dependencias.

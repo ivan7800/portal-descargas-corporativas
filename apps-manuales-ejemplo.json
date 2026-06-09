@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Claude",
+    "desc": "Asistente de IA para trabajo y productividad",
+    "icon": "🤖",
+    "bg": "#F3E5F5",
+    "tag": "IA",
+    "platform": "Web",
+    "rec": true,
+    "url": "https://claude.ai"
+  },
+  {
+    "name": "Gemini",
+    "desc": "Asistente de IA de Google",
+    "icon": "✨",
+    "bg": "#E8F0FE",
+    "tag": "IA",
+    "platform": "Web",
+    "rec": false,
+    "url": "https://gemini.google.com"
+  }
+]
