@@ -1,22 +1,34 @@
-# Portal de Descargas Corporativas
+# Portal de Descargas Corporativas Pro
 
-Portal HTML/CSS/JavaScript listo para GitHub Pages.
+Portal HTML local para organizar enlaces oficiales de descarga de aplicaciones corporativas.
+
+## Características
+
+- Funciona abriendo `index.html` directamente.
+- Catálogo base de aplicaciones.
+- Añadir aplicaciones manualmente.
+- Editar y borrar aplicaciones manuales.
+- Favoritos.
+- Categorías dinámicas.
+- Búsqueda por nombre, descripción, categoría, plataforma, URL y notas.
+- Importar/exportar JSON.
+- Vista compacta.
+- Modo claro/oscuro.
+- Preparado como PWA con `manifest.json` y `sw.js`.
+- Sin backend y sin envío de datos.
 
 ## Uso
 
-1. Abre `index.html` directamente en el navegador, o súbelo a GitHub Pages.
-2. Usa `+ Añadir app` para crear aplicaciones manuales.
-3. Las apps manuales se guardan localmente en el navegador mediante `localStorage`.
-4. Usa `Exportar JSON` para guardar tus apps manuales.
-5. Usa `Importar JSON` para recuperarlas en otro navegador/equipo.
+1. Descarga el repositorio.
+2. Abre `index.html` en el navegador.
+3. Pulsa `+ Añadir app` para crear aplicaciones propias.
+4. Usa `Exportar JSON` para guardar copia de seguridad.
+5. Usa `Importar JSON` para restaurar o compartir catálogo.
 
-## Archivos
+## Nota sobre PWA
 
-- `index.html`: aplicación completa.
-- `apps-manuales-ejemplo.json`: ejemplo de importación.
-- `.gitignore`: exclusiones básicas.
-- `LICENSE`: licencia MIT.
+La instalación como PWA y el service worker funcionan mejor sirviendo la carpeta desde GitHub Pages, VS Code Live Server o cualquier servidor local. El portal principal funciona también abriendo el HTML directamente.
 
-## Nota
+## Seguridad
 
-No requiere servidor, build, npm ni dependencias.
+Los datos manuales se guardan en `localStorage` del navegador. No contiene autenticación real ni control corporativo centralizado.

@@ -1,990 +1,183 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IndraGroup — Portal de Descargas Corporativas</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0055A5" />
+<title>Portal de Descargas Corporativas Pro</title>
+<link rel="manifest" href="manifest.json" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-  --bg: #F4F2EE;
-  --surface: #FAFAF8;
-  --surface2: #EEECEA;
-  --border: #D8D5CF;
-  --border2: #C5C1BA;
-  --text: #1A1916;
-  --text2: #6B6760;
-  --text3: #9E9A94;
-  --accent: #2D5BE3;
-  --accent-bg: #EEF2FD;
-  --accent-text: #1A3A9E;
-  --badge-bg: #FFF3CD;
-  --badge-text: #92620A;
-  --badge-border: #F5D87A;
-  --radius: 10px;
-  --radius-lg: 14px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  }
-
-  @media (prefers-color-scheme: dark) {
-  :root {
-  --bg: #141412;
-  --surface: #1C1C1A;
-  --surface2: #242422;
-  --border: #2E2E2B;
-  --border2: #3A3A36;
-  --text: #F0EDE8;
-  --text2: #9E9A94;
-  --text3: #5C5A55;
-  --accent: #5B82F0;
-  --accent-bg: #1A2444;
-  --accent-text: #8BAAF5;
-  --badge-bg: #2A2000;
-  --badge-text: #F5C842;
-  --badge-border: #5C4500;
-  }
-  }
-
-  body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  padding: 0;
-  }
-
-  /* HEADER */
-  .site-header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 1.25rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  }
-
-  .site-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  }
-
-  .logo-icon {
-  width: 32px;
-  height: 32px;
-  background: #0055A5;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  }
-
-  .logo-icon svg { fill: white; width: 22px; height: 22px; }
-
-  .logo-name {
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  color: var(--text);
-  }
-
-  .logo-name span {
-  font-weight: 300;
-  color: var(--text2);
-  }
-
-  .header-meta {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--text3);
-  letter-spacing: 0.05em;
-  }
-
-  /* MAIN LAYOUT */
-  .main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 2rem 4rem;
-  }
-
-  /* HERO */
-  .hero {
-  padding: 2.5rem 0 2rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 2rem;
-  }
-
-  .hero h1 {
-  font-size: clamp(28px, 4vw, 40px);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  color: var(--text);
-  margin-bottom: 0.5rem;
-  }
-
-  .hero h1 strong { font-weight: 500; }
-
-  .hero p {
-  font-size: 15px;
-  color: var(--text2);
-  max-width: 480px;
-  line-height: 1.6;
-  }
-
-  /* CONTROLS */
-  .controls {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  }
-
-  .search-wrap {
-  position: relative;
-  flex: 1;
-  min-width: 220px;
-  max-width: 340px;
-  }
-
-  .search-wrap svg {
-  position: absolute;
-  left: 11px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 15px;
-  height: 15px;
-  stroke: var(--text3);
-  fill: none;
-  pointer-events: none;
-  }
-
-  .search-input {
-  width: 100%;
-  padding: 9px 12px 9px 34px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text);
-  transition: border-color 0.15s;
-  outline: none;
-  }
-
-  .search-input::placeholder { color: var(--text3); }
-  .search-input:focus { border-color: var(--border2); }
-
-  .filters {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  }
-
-  .filter-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  background: transparent;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all 0.12s;
-  white-space: nowrap;
-  }
-
-  .filter-btn:hover {
-  border-color: var(--border2);
-  color: var(--text);
-  background: var(--surface);
-  }
-
-  .filter-btn.active {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-  font-weight: 500;
-  }
-
-  /* STATS BAR */
-  .stats-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  }
-
-  .stats-count {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: var(--text3);
-  }
-
-  .stats-count span { color: var(--text); font-weight: 500; }
-
-  /* GRID */
-  .app-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  }
-
-  .app-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.1rem 1rem 0.9rem;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  animation: fadeIn 0.2s ease both;
-  position: relative;
-  }
-
-  @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-  }
-
-  .app-card:hover {
-  border-color: var(--border2);
-  box-shadow: var(--shadow);
-  }
-
-  .app-card.hidden { display: none; }
-
-  /* BADGE RECOMENDADO */
-  .badge-rec {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: var(--badge-bg);
-  color: var(--badge-text);
-  border: 1px solid var(--badge-border);
-  border-radius: 5px;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  padding: 2px 6px;
-  text-transform: uppercase;
-  line-height: 1.4;
-  }
-
-  .card-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  }
-
-  .app-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-  }
-
-  .app-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-  padding-right: 28px; /* espacio para badge */
-  }
-
-  .app-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  }
-
-  .app-tag {
-  font-size: 11px;
-  color: var(--text3);
-  font-family: 'DM Mono', monospace;
-  letter-spacing: 0.02em;
-  }
-
-  .app-desc {
-  font-size: 12.5px;
-  color: var(--text2);
-  line-height: 1.45;
-  }
-
-  /* VERSIÓN */
-
-  .app-platform {
-  font-size: 11px;
-  color: var(--text3);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  }
-
-  .app-platform::before {
-  content: '';
-  display: inline-block;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--text3);
-  opacity: 0.5;
-  flex-shrink: 0;
-  }
-
-  .app-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  margin-top: auto;
-  }
-
-  .dl-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: none;
-  border-radius: 7px;
-  padding: 6px 11px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: opacity 0.12s;
-  white-space: nowrap;
-  }
-
-  .dl-btn:hover { opacity: 0.8; }
-
-  .dl-btn svg {
-  width: 13px;
-  height: 13px;
-  stroke: var(--accent);
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  flex-shrink: 0;
-  }
-
-  /* NO RESULTS */
-  .no-results {
-  text-align: center;
-  padding: 3rem 0;
-  color: var(--text3);
-  font-size: 14px;
-  display: none;
-  }
-
-  /* FOOTER */
-  .site-footer {
-  border-top: 1px solid var(--border);
-  padding: 1.25rem 2rem;
-  text-align: center;
-  font-size: 12px;
-  color: var(--text3);
-  margin-top: 3rem;
-  font-family: 'DM Mono', monospace;
-  letter-spacing: 0.03em;
-  }
-
-
-  /* MANUAL APP MANAGER */
-  .actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .action-btn, .file-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12.5px;
-    font-weight: 500;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text2);
-    border-radius: 8px;
-    padding: 8px 12px;
-    cursor: pointer;
-    transition: all 0.12s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-  }
-
-  .action-btn:hover, .file-label:hover {
-    border-color: var(--border2);
-    color: var(--text);
-  }
-
-  .action-btn.primary {
-    background: var(--text);
-    color: var(--bg);
-    border-color: var(--text);
-  }
-
-  .action-btn.danger { color: #B42318; }
-  .file-input { display: none; }
-
-  .manual-mark {
-    display: inline-flex;
-    width: fit-content;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--accent-text);
-    background: var(--accent-bg);
-    border-radius: 5px;
-    padding: 2px 6px;
-    margin-top: 2px;
-  }
-
-  .delete-manual-btn {
-    border: 1px solid var(--border);
-    background: transparent;
-    color: #B42318;
-    border-radius: 7px;
-    font-size: 11px;
-    padding: 5px 8px;
-    cursor: pointer;
-    align-self: flex-start;
-  }
-
-  .delete-manual-btn:hover { border-color: #B42318; }
-
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-    padding: 1rem;
-  }
-
-  .modal-backdrop.show { display: flex; }
-
-  .modal {
-    width: min(620px, 100%);
-    max-height: 92vh;
-    overflow: auto;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    padding: 1.25rem;
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .modal-header h2 {
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-  }
-
-  .close-btn {
-    border: none;
-    background: transparent;
-    color: var(--text2);
-    font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .field { display: flex; flex-direction: column; gap: 5px; }
-  .field.full { grid-column: 1 / -1; }
-
-  .field label {
-    font-size: 12px;
-    color: var(--text2);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .field input, .field textarea, .field select {
-    width: 100%;
-    padding: 9px 10px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    outline: none;
-  }
-
-  .field textarea { min-height: 76px; resize: vertical; }
-  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--border2); }
-
-  .check-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text2);
-    font-size: 13px;
-    margin-top: 4px;
-  }
-
-  .modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 1rem;
-  }
-
-  .hint {
-    color: var(--text3);
-    font-size: 12px;
-    line-height: 1.45;
-    margin-top: 10px;
-  }
-
-  @media (max-width: 640px) {
-    .site-header { padding: 1rem; }
-    .main { padding: 1.25rem 1rem 3rem; }
-    .form-grid { grid-template-columns: 1fr; }
-    .actions { width: 100%; }
-    .action-btn, .file-label { flex: 1; justify-content: center; }
-  }
-
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#F4F2EE;--surface:#FAFAF8;--surface2:#EEECEA;--border:#D8D5CF;--border2:#C5C1BA;--text:#1A1916;--text2:#6B6760;--text3:#9E9A94;--accent:#2D5BE3;--accent-bg:#EEF2FD;--accent-text:#1A3A9E;--danger:#B42318;--danger-bg:#FEF3F2;--ok:#067647;--ok-bg:#ECFDF3;--badge-bg:#FFF3CD;--badge-text:#92620A;--badge-border:#F5D87A;--radius:10px;--radius-lg:14px;--shadow:0 10px 30px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06)}[data-theme="dark"]{--bg:#141412;--surface:#1C1C1A;--surface2:#242422;--border:#2E2E2B;--border2:#3A3A36;--text:#F0EDE8;--text2:#B5B1AA;--text3:#77736D;--accent:#7EA0FF;--accent-bg:#1A2444;--accent-text:#AFC2FF;--danger:#FFB4AB;--danger-bg:#3A1614;--ok:#86E7B8;--ok-bg:#103A27;--badge-bg:#2A2000;--badge-text:#F5C842;--badge-border:#5C4500}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}.site-header{background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:100}.site-logo{display:flex;align-items:center;gap:10px}.logo-icon{width:34px;height:34px;background:#0055A5;border-radius:9px;display:flex;align-items:center;justify-content:center}.logo-icon svg{fill:#fff;width:22px;height:22px}.logo-name{font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--text)}.logo-name span{font-weight:300;color:var(--text2)}.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.header-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:.05em;margin-right:4px}.main{max-width:1180px;margin:0 auto;padding:2rem 2rem 4rem}.hero{padding:2rem 0;border-bottom:1px solid var(--border);margin-bottom:1.5rem;display:flex;align-items:end;justify-content:space-between;gap:2rem}.hero h1{font-size:clamp(28px,4vw,42px);font-weight:300;letter-spacing:-.04em;line-height:1.05;margin-bottom:.6rem}.hero h1 strong{font-weight:700}.hero p{font-size:15px;color:var(--text2);max-width:540px;line-height:1.6}.hero-tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:8px 12px;cursor:pointer;text-decoration:none;transition:.15s;white-space:nowrap}.btn:hover{border-color:var(--border2);box-shadow:0 1px 2px rgba(0,0,0,.05)}.btn.primary{background:var(--text);border-color:var(--text);color:var(--bg)}.btn.accent{background:var(--accent-bg);border-color:transparent;color:var(--accent)}.btn.danger{background:var(--danger-bg);border-color:transparent;color:var(--danger)}.btn.small{font-size:12px;padding:6px 9px;border-radius:7px}.btn.icon{width:36px;height:36px;padding:0}.controls{display:flex;gap:12px;align-items:center;margin-bottom:1rem;flex-wrap:wrap}.search-wrap{position:relative;flex:1;min-width:220px;max-width:390px}.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--text3);fill:none;pointer-events:none}.search-input,.select,input,textarea{width:100%;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none}.search-input{padding-left:34px}.search-input:focus,.select:focus,input:focus,textarea:focus{border-color:var(--accent)}textarea{min-height:84px;resize:vertical}.filters{display:flex;gap:6px;flex-wrap:wrap}.filter-btn{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 14px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--text2);cursor:pointer;transition:.12s;white-space:nowrap}.filter-btn:hover{border-color:var(--border2);color:var(--text);background:var(--surface)}.filter-btn.active{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:600}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}.stats-count{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3)}.stats-count span{color:var(--text);font-weight:600}.view-toggles{display:flex;gap:6px}.app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}.app-grid.compact{grid-template-columns:1fr}.app-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.05rem;display:flex;flex-direction:column;gap:8px;transition:.15s;position:relative;animation:fadeIn .18s ease both}.app-card:hover{border-color:var(--border2);box-shadow:var(--shadow)}@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}.app-card.hidden{display:none}.badge-row{position:absolute;top:10px;right:10px;display:flex;gap:5px;align-items:center}.badge{background:var(--surface2);color:var(--text2);border:1px solid var(--border);border-radius:999px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.04em;padding:2px 6px;text-transform:uppercase;line-height:1.4}.badge.rec{background:var(--badge-bg);color:var(--badge-text);border-color:var(--badge-border)}.badge.manual{background:var(--ok-bg);color:var(--ok);border-color:transparent}.card-top{display:flex;align-items:flex-start;gap:10px;padding-right:32px}.app-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}.app-meta{display:flex;flex-direction:column;gap:3px;min-width:0}.app-name{font-size:14px;font-weight:700;color:var(--text);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.app-tag{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;letter-spacing:.02em}.app-desc{font-size:12.5px;color:var(--text2);line-height:1.45}.app-note{font-size:11.5px;color:var(--text2);background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px}.app-platform{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}.app-platform::before{content:'';display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--text3);opacity:.5;flex-shrink:0}.app-footer{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:auto;flex-wrap:wrap}.card-actions{display:flex;gap:5px;flex-wrap:wrap}.dl-btn{display:inline-flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:700;color:var(--accent);background:var(--accent-bg);border:none;border-radius:7px;padding:7px 10px;cursor:pointer;text-decoration:none;transition:.12s;white-space:nowrap}.dl-btn:hover{opacity:.83}.star{border:1px solid var(--border);background:var(--surface2);color:var(--text2);border-radius:7px;width:32px;height:32px;cursor:pointer;font-size:16px}.star.active{color:#F5B301;background:#FFF8E1}.no-results{text-align:center;padding:3rem 0;color:var(--text3);font-size:14px;display:none}.site-footer{border-top:1px solid var(--border);padding:1.25rem 2rem;text-align:center;font-size:12px;color:var(--text3);margin-top:3rem;font-family:'DM Mono',monospace;letter-spacing:.03em}.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.46);display:none;align-items:center;justify-content:center;padding:1rem;z-index:500}.modal-backdrop.show{display:flex}.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)}.modal-header{padding:1.1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem}.modal-title{font-size:18px;font-weight:700;letter-spacing:-.02em}.modal-body{padding:1.25rem}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.form-group{display:flex;flex-direction:column;gap:6px}.form-group.full{grid-column:1/-1}label{font-size:12px;color:var(--text2);font-weight:700}.hint{font-size:11px;color:var(--text3);line-height:1.4}.modal-footer{padding:1rem 1.25rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.toast{position:fixed;right:1rem;bottom:1rem;z-index:900;background:var(--text);color:var(--bg);padding:10px 13px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.18s}.toast.show{opacity:1;transform:translateY(0)}.manage-list{display:flex;flex-direction:column;gap:8px}.manage-item{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--border);background:var(--surface2);border-radius:12px;padding:10px}.manage-main{display:flex;align-items:center;gap:9px;min-width:0}.manage-main strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.manage-main span{display:block;font-size:11px;color:var(--text3)}.empty{padding:1.2rem;text-align:center;color:var(--text3);font-size:13px;border:1px dashed var(--border);border-radius:12px}.file-input{display:none}@media(max-width:760px){.site-header,.hero,.toolbar{align-items:flex-start;flex-direction:column}.main{padding:1.25rem}.hero-tools{justify-content:flex-start}.form-grid{grid-template-columns:1fr}.header-actions{width:100%}.btn{flex:1}.app-grid{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
-
+<body data-theme="dark">
 <header class="site-header">
   <div class="site-logo">
-  <div class="logo-icon">
-      <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" style="fill:white;width:22px;height:22px;">
-        <rect x="4" y="3" width="4" height="16" rx="1"/>
-        <rect x="9" y="3" width="9" height="4" rx="1"/>
-        <rect x="9" y="15" width="9" height="4" rx="1"/>
-        <rect x="14" y="7" width="4" height="8" rx="1"/>
-      </svg>
-    </div>
-  <div class="logo-name">Portal <span>/ Descargas Corporativas</span></div>
+    <div class="logo-icon" aria-hidden="true"><svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="3" width="4" height="16" rx="1"/><rect x="9" y="3" width="9" height="4" rx="1"/><rect x="9" y="15" width="9" height="4" rx="1"/><rect x="14" y="7" width="4" height="8" rx="1"/></svg></div>
+    <div class="logo-name">Portal <span>/ Descargas Corporativas Pro</span></div>
   </div>
-  <div class="header-meta" id="header-count">Cargando...</div>
+  <div class="header-actions">
+    <div class="header-meta" id="header-count">Cargando...</div>
+    <button class="btn icon" id="themeBtn" title="Cambiar tema">◐</button>
+  </div>
+<button class="btn" id="themeToggle">☀️ Claro</button>
 </header>
 
 <main class="main">
-  <div class="hero">
-  <h1>Descargas<br><strong>corporativas</strong></h1>
-  <p>Acceso directo a las fuentes oficiales de todas las aplicaciones aprobadas por el departamento IT.</p>
-  </div>
+  <section class="hero">
+    <div>
+      <h1>Descargas<br><strong>corporativas</strong></h1>
+      <p>Catálogo local, editable y exportable de aplicaciones aprobadas. Funciona abriendo el archivo en local y no envía datos a internet.</p>
+    </div>
+    <div class="hero-tools">
+      <button class="btn primary" id="addBtn">＋ Añadir app</button>
+      <button class="btn" id="manageBtn">Gestionar</button>
+      <button class="btn" id="exportBtn">Exportar JSON</button>
+      <button class="btn" id="importBtn">Importar JSON</button>
+      <input id="importFile" class="file-input" type="file" accept="application/json,.json" />
+    </div>
+  </section>
 
-  <div class="controls">
-  <div class="search-wrap">
-  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-  </svg>
-  <input class="search-input" id="search" type="text" placeholder="Buscar aplicación..." autocomplete="off" />
-  </div>
-  <div class="filters" id="filters"></div>
-  <div class="actions">
-    <button class="action-btn primary" id="add-app-btn" type="button">+ Añadir app</button>
-    <button class="action-btn" id="export-apps-btn" type="button">Exportar JSON</button>
-    <label class="file-label" for="import-apps-input">Importar JSON</label>
-    <input class="file-input" id="import-apps-input" type="file" accept="application/json,.json">
-    <button class="action-btn danger" id="clear-manual-btn" type="button">Borrar manuales</button>
-  </div>
-  </div>
+  <section class="controls">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" id="search" type="text" placeholder="Buscar por app, descripción, categoría, plataforma o URL..." autocomplete="off" />
+    </div>
+    <select class="select" id="sourceFilter" style="max-width:180px">
+      <option value="all">Todas</option><option value="base">Corporativas base</option><option value="manual">Añadidas manualmente</option><option value="favorites">Favoritas</option>
+    </select>
+    <div class="filters" id="filters"></div>
+  </section>
 
-  <div class="stats-bar">
-  <div class="stats-count" id="count-label"></div>
-  </div>
+  <section class="toolbar">
+    <div class="stats-count" id="count-label"></div>
+    <div class="view-toggles">
+      <button class="btn small" id="sortBtn">Orden A-Z</button>
+      <button class="btn small" id="compactBtn">Vista compacta</button>
+      <button class="btn small danger" id="resetBtn">Restaurar manuales</button>
+    </div>
+  </section>
 
-  <div class="app-grid" id="grid"></div>
+  <section class="app-grid" id="grid"></section>
   <div class="no-results" id="no-results">No se encontraron aplicaciones para esa búsqueda.</div>
 </main>
+<footer class="site-footer">PORTAL LOCAL · SIN BACKEND · EXPORTABLE · PWA READY</footer>
 
-
-<div class="modal-backdrop" id="app-modal" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-header">
-      <h2 id="modal-title">Añadir aplicación manual</h2>
-      <button class="close-btn" id="close-modal-btn" type="button" aria-label="Cerrar">×</button>
-    </div>
-
-    <form id="manual-app-form">
-      <div class="form-grid">
-        <div class="field">
-          <label for="app-name">Nombre *</label>
-          <input id="app-name" name="name" required placeholder="Ej. Claude Desktop">
-        </div>
-        <div class="field">
-          <label for="app-tag">Categoría *</label>
-          <input id="app-tag" name="tag" required placeholder="Ej. IA, Corporativo, Utilidades">
-        </div>
-        <div class="field full">
-          <label for="app-desc">Descripción *</label>
-          <textarea id="app-desc" name="desc" required placeholder="Breve descripción de la aplicación"></textarea>
-        </div>
-        <div class="field">
-          <label for="app-platform">Plataforma</label>
-          <input id="app-platform" name="platform" placeholder="Windows / Mac / Web" value="Windows">
-        </div>
-        <div class="field">
-          <label for="app-icon">Icono</label>
-          <input id="app-icon" name="icon" placeholder="🔗" value="🔗">
-        </div>
-        <div class="field">
-          <label for="app-bg">Color de fondo</label>
-          <input id="app-bg" name="bg" type="color" value="#E8F0FE">
-        </div>
-        <div class="field">
-          <label for="app-rec">Estado</label>
-          <label class="check-row"><input id="app-rec" name="rec" type="checkbox"> Marcar como recomendado</label>
-        </div>
-        <div class="field full">
-          <label for="app-url">URL de descarga o web *</label>
-          <input id="app-url" name="url" required placeholder="https://...">
+<div class="modal-backdrop" id="appModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title" id="modalTitle">Añadir aplicación</div><button class="btn icon" data-close="appModal">×</button></div>
+    <form id="appForm">
+      <div class="modal-body">
+        <input type="hidden" id="appId" />
+        <div class="form-grid">
+          <div class="form-group"><label for="name">Nombre *</label><input id="name" required maxlength="60" placeholder="Ej. Figma" /></div>
+          <div class="form-group"><label for="url">URL *</label><input id="url" required placeholder="https://..." /></div>
+          <div class="form-group"><label for="tag">Categoría *</label><input id="tag" required list="tagOptions" placeholder="Ej. Diseño" /><datalist id="tagOptions"></datalist></div>
+          <div class="form-group"><label for="platform">Plataforma</label><input id="platform" placeholder="Windows / Mac / Web" /></div>
+          <div class="form-group"><label for="icon">Icono</label><input id="icon" maxlength="4" placeholder="💻" /><div class="hint">Puedes usar un emoji. Si lo dejas vacío, se asigna uno automático.</div></div>
+          <div class="form-group"><label for="bg">Color fondo icono</label><input id="bg" type="color" value="#E8F0FE" /></div>
+          <div class="form-group full"><label for="desc">Descripción *</label><input id="desc" required maxlength="140" placeholder="Descripción breve de la aplicación" /></div>
+          <div class="form-group full"><label for="note">Nota interna</label><textarea id="note" placeholder="Ej. Requiere VPN, licencia o aprobación de IT"></textarea></div>
+          <div class="form-group"><label><input id="approved" type="checkbox" checked /> Aprobada</label></div>
         </div>
       </div>
-      <p class="hint">Las aplicaciones añadidas se guardan solo en este navegador mediante localStorage. Para llevarlas a otro equipo, usa Exportar JSON e Importar JSON.</p>
-      <div class="modal-actions">
-        <button class="action-btn" id="cancel-modal-btn" type="button">Cancelar</button>
-        <button class="action-btn primary" type="submit">Guardar aplicación</button>
-      </div>
+      <div class="modal-footer"><button type="button" class="btn" data-close="appModal">Cancelar</button><button class="btn primary" type="submit">Guardar aplicación</button></div>
     </form>
   </div>
 </div>
 
-
+<div class="modal-backdrop" id="manageModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Gestión de aplicaciones manuales</div><button class="btn icon" data-close="manageModal">×</button></div>
+    <div class="modal-body"><div id="manageList" class="manage-list"></div></div>
+    <div class="modal-footer"><button class="btn" data-close="manageModal">Cerrar</button><button class="btn danger" id="deleteManualsBtn">Borrar todas las manuales</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
 
 <script>
-const defaultApps = [
-  // UTILIDADES
-  { name:"7-Zip",  desc:"Compresor de archivos open source",  icon:"🗜️", bg:"#EBF4FF", tag:"Utilidades",  platform:"Windows", rec:false, url:"https://www.7-zip.org/download.html" },
-  { name:"TeamViewer",  desc:"Acceso y control remoto",  icon:"🖥️", bg:"#E1F5FE", tag:"Utilidades",  platform:"Win / Mac / Linux", rec:true,  url:"https://www.teamviewer.com/download/" },
-  { name:"AnyDesk",  desc:"Escritorio remoto ligero",  icon:"🔗", bg:"#FBE9E7", tag:"Utilidades",  platform:"Win / Mac / Linux", rec:false, url:"https://anydesk.com/download" },
-  { name:"Everything",  desc:"Búsqueda ultrarrápida de archivos",  icon:"🔍", bg:"#FFF8E1", tag:"Utilidades",  platform:"Windows", rec:true,  url:"https://www.voidtools.com/downloads/" },
-  { name:"TreeSize Free",  desc:"Analizador de espacio en disco",  icon:"💾", bg:"#E8F5E9", tag:"Utilidades",  platform:"Windows", rec:false, url:"https://www.jam-software.com/treesize_free" },
-  { name:"CrystalDiskInfo",  desc:"Monitor de salud de discos",  icon:"🔮", bg:"#EDE7F6", tag:"Utilidades",  platform:"Windows", rec:false, url:"https://crystalmark.info/en/software/crystaldiskinfo/" },
-  { name:"CPU-Z",  desc:"Info detallada del hardware",  icon:"⚙️", bg:"#F1F8E9", tag:"Utilidades",  platform:"Windows", rec:false, url:"https://www.cpuid.com/softwares/cpu-z.html" },
+'use strict';
+const STORAGE_KEYS={manual:'portal.manualApps.v2',favorites:'portal.favorites.v2',theme:'portal.theme.v2',compact:'portal.compact.v2'};
+const defaultApps=[
+{name:'7-Zip',desc:'Compresor de archivos open source',icon:'🗜️',bg:'#EBF4FF',tag:'Utilidades',platform:'Windows',approved:true,url:'https://www.7-zip.org/download.html'},
+{name:'TeamViewer',desc:'Acceso y control remoto',icon:'🖥️',bg:'#E1F5FE',tag:'Utilidades',platform:'Win / Mac / Linux',approved:true,url:'https://www.teamviewer.com/download/'},
+{name:'AnyDesk',desc:'Escritorio remoto ligero',icon:'🔗',bg:'#FBE9E7',tag:'Utilidades',platform:'Win / Mac / Linux',approved:true,url:'https://anydesk.com/download'},
+{name:'Everything',desc:'Búsqueda ultrarrápida de archivos',icon:'🔍',bg:'#FFF8E1',tag:'Utilidades',platform:'Windows',approved:true,url:'https://www.voidtools.com/downloads/'},
+{name:'TreeSize Free',desc:'Analizador de espacio en disco',icon:'💾',bg:'#E8F5E9',tag:'Utilidades',platform:'Windows',approved:true,url:'https://www.jam-software.com/treesize_free'},
+{name:'CrystalDiskInfo',desc:'Monitor de salud de discos',icon:'🔮',bg:'#EDE7F6',tag:'Utilidades',platform:'Windows',approved:true,url:'https://crystalmark.info/en/software/crystaldiskinfo/'},
+{name:'CPU-Z',desc:'Info detallada del hardware',icon:'⚙️',bg:'#F1F8E9',tag:'Utilidades',platform:'Windows',approved:true,url:'https://www.cpuid.com/softwares/cpu-z.html'},
+{name:'Google Chrome',desc:'Navegador rápido de Google',icon:'🌐',bg:'#FEF3E2',tag:'Navegadores',platform:'Win / Mac / Linux',approved:true,url:'https://www.google.com/chrome/'},
+{name:'Mozilla Firefox',desc:'Navegador libre y privado',icon:'🦊',bg:'#FFF0E0',tag:'Navegadores',platform:'Win / Mac / Linux',approved:true,url:'https://www.mozilla.org/firefox/new/'},
+{name:'Microsoft Edge',desc:'Navegador corporativo de Microsoft',icon:'🔷',bg:'#E8F0FE',tag:'Navegadores',platform:'Win / Mac',approved:true,url:'https://www.microsoft.com/edge'},
+{name:'Zoom',desc:'Videollamadas y webinars',icon:'📹',bg:'#E8F0FE',tag:'Comunicación',platform:'Win / Mac',approved:true,url:'https://zoom.us/download'},
+{name:'Microsoft Teams',desc:'Colaboración y chat corporativo',icon:'💼',bg:'#EDE7F6',tag:'Comunicación',platform:'Win / Mac',approved:true,url:'https://www.microsoft.com/microsoft-teams/download-app'},
+{name:'Slack',desc:'Mensajería de equipo',icon:'💬',bg:'#F0EDFF',tag:'Comunicación',platform:'Win / Mac / Linux',approved:true,url:'https://slack.com/downloads'},
+{name:'Skype',desc:'Llamadas VoIP y videollamadas',icon:'📞',bg:'#E3F2FD',tag:'Comunicación',platform:'Win / Mac',approved:true,url:'https://www.skype.com/get-skype/'},
+{name:'WhatsApp Desktop',desc:'WhatsApp para escritorio',icon:'💚',bg:'#E8F5E9',tag:'Comunicación',platform:'Win / Mac',approved:true,url:'https://www.whatsapp.com/download'},
+{name:'Thunderbird',desc:'Cliente de correo electrónico',icon:'📧',bg:'#E3F2FD',tag:'Comunicación',platform:'Win / Mac / Linux',approved:true,url:'https://www.thunderbird.net/es-ES/'},
+{name:'Adobe Reader',desc:'Visor oficial de PDFs',icon:'📄',bg:'#FDEEEE',tag:'Productividad',platform:'Win / Mac',approved:true,url:'https://get.adobe.com/reader/'},
+{name:'LibreOffice',desc:'Suite ofimática gratuita',icon:'📊',bg:'#E8F5E9',tag:'Productividad',platform:'Win / Mac / Linux',approved:true,url:'https://www.libreoffice.org/download/download/'},
+{name:'Foxit PDF Reader',desc:'Lector de PDF ligero y rápido',icon:'📋',bg:'#FBE9E7',tag:'Productividad',platform:'Win / Mac',approved:true,url:'https://www.foxit.com/pdf-reader/'},
+{name:'Notion',desc:'Notas, wikis y bases de datos',icon:'📓',bg:'#F5F5F5',tag:'Productividad',platform:'Win / Mac',approved:true,url:'https://www.notion.so/desktop'},
+{name:'Obsidian',desc:'Notas en Markdown con grafos',icon:'🪨',bg:'#EDE7F6',tag:'Productividad',platform:'Win / Mac / Linux',approved:true,url:'https://obsidian.md/download'},
+{name:'VLC',desc:'Reproductor multimedia universal',icon:'🎬',bg:'#FFF3E0',tag:'Productividad',platform:'Win / Mac / Linux',approved:true,url:'https://www.videolan.org/vlc/'},
+{name:'KeePass',desc:'Gestor de contraseñas local',icon:'🔑',bg:'#FFF9C4',tag:'Seguridad',platform:'Windows',approved:true,url:'https://keepass.info/download.html'},
+{name:'Bitwarden',desc:'Gestor de contraseñas en la nube',icon:'🛡️',bg:'#E8EAF6',tag:'Seguridad',platform:'Win / Mac / Linux',approved:true,url:'https://bitwarden.com/download/'},
+{name:'Malwarebytes',desc:'Antimalware bajo demanda',icon:'🦠',bg:'#E0F7FA',tag:'Seguridad',platform:'Win / Mac',approved:true,url:'https://www.malwarebytes.com/mwb-download'},
+{name:'VeraCrypt',desc:'Cifrado de discos y contenedores',icon:'🔐',bg:'#EFEBE9',tag:'Seguridad',platform:'Win / Mac / Linux',approved:true,url:'https://www.veracrypt.fr/en/Downloads.html'},
+{name:'Wireshark',desc:'Análisis de tráfico de red',icon:'🌊',bg:'#E3F2FD',tag:'Seguridad',platform:'Win / Mac / Linux',approved:true,url:'https://www.wireshark.org/download.html'},
+{name:'Visual Studio Code',desc:'Editor de código gratuito de Microsoft',icon:'💻',bg:'#E3F2FD',tag:'Desarrollo',platform:'Win / Mac / Linux',approved:true,url:'https://code.visualstudio.com/download'},
+{name:'Notepad++',desc:'Editor de texto avanzado',icon:'📝',bg:'#E8F5E9',tag:'Desarrollo',platform:'Windows',approved:true,url:'https://notepad-plus-plus.org/downloads/'},
+{name:'Git',desc:'Control de versiones distribuido',icon:'🌿',bg:'#FCE4EC',tag:'Desarrollo',platform:'Win / Mac / Linux',approved:true,url:'https://git-scm.com/downloads'},
+{name:'Python',desc:'Lenguaje de programación versátil',icon:'🐍',bg:'#E8F5E9',tag:'Desarrollo',platform:'Win / Mac / Linux',approved:true,url:'https://www.python.org/downloads/'},
+{name:'Node.js',desc:'Entorno de ejecución JavaScript',icon:'🟢',bg:'#E8F5E9',tag:'Desarrollo',platform:'Win / Mac / Linux',approved:true,url:'https://nodejs.org/es/download/'},
+{name:'PuTTY',desc:'Cliente SSH y Telnet',icon:'⌨️',bg:'#EFEBE9',tag:'Desarrollo',platform:'Windows',approved:true,url:'https://www.putty.org/'},
+{name:'WinSCP',desc:'Cliente FTP y SFTP gráfico',icon:'📡',bg:'#F3E5F5',tag:'Desarrollo',platform:'Windows',approved:true,url:'https://winscp.net/eng/download.php'},
+{name:'Postman',desc:'Testing y documentación de APIs',icon:'🚀',bg:'#FBE9E7',tag:'Desarrollo',platform:'Win / Mac / Linux',approved:true,url:'https://www.postman.com/downloads/'},
+{name:'Docker Desktop',desc:'Contenedores y virtualización',icon:'🐳',bg:'#E3F2FD',tag:'Desarrollo',platform:'Win / Mac',approved:true,url:'https://www.docker.com/products/docker-desktop/'},
+{name:'DBeaver',desc:'Cliente universal de bases de datos',icon:'🗄️',bg:'#E8F4FD',tag:'Desarrollo',platform:'Win / Mac / Linux',approved:true,url:'https://dbeaver.io/download/'},
+{name:'Nmap',desc:'Escáner de red y puertos',icon:'📡',bg:'#E0F7FA',tag:'Red',platform:'Win / Mac / Linux',approved:true,url:'https://nmap.org/download.html'},
+{name:'Advanced IP Scanner',desc:'Escáner de red local',icon:'🔭',bg:'#F1F8E9',tag:'Red',platform:'Windows',approved:true,url:'https://www.advanced-ip-scanner.com/es/'},
+{name:'Angry IP Scanner',desc:'Escaneo rápido de IPs',icon:'⚡',bg:'#FFF9C4',tag:'Red',platform:'Win / Mac / Linux',approved:true,url:'https://angryip.org/download/'},
+{name:'FileZilla',desc:'Cliente FTP multiplataforma',icon:'📂',bg:'#FBE9E7',tag:'Red',platform:'Win / Mac / Linux',approved:true,url:'https://filezilla-project.org/download.php'},
+{name:'Citrix Workspace',desc:'Acceso a escritorios y apps virtuales',icon:'🏢',bg:'#E3F2FD',tag:'Corporativo',platform:'Win / Mac / Linux',approved:true,url:'https://www.citrix.com/downloads/workspace-app/'},
+{name:'Cisco Webex',desc:'Videollamadas y reuniones corporativas',icon:'🎥',bg:'#E8F0FE',tag:'Corporativo',platform:'Win / Mac',approved:true,url:'https://www.webex.com/downloads.html'},
+{name:'Microsoft 365',desc:'Word, Excel, PowerPoint y más',icon:'🟦',bg:'#E8F0FE',tag:'Corporativo',platform:'Win / Mac',approved:true,url:'https://www.microsoft.com/microsoft-365/download-office'},
+{name:'GlobalProtect VPN',desc:'VPN corporativa de Palo Alto Networks',icon:'🔒',bg:'#EDE7F6',tag:'Corporativo',platform:'Win / Mac',approved:true,url:'https://www.paloaltonetworks.com/resources/datasheets/globalprotect'},
+{name:'OneDrive',desc:'Almacenamiento y sincronización en la nube',icon:'☁️',bg:'#E3F2FD',tag:'Corporativo',platform:'Win / Mac',approved:true,url:'https://www.microsoft.com/microsoft-365/onedrive/download'},
+{name:'SharePoint',desc:'Portal colaborativo de Microsoft',icon:'🗂️',bg:'#E8F0FE',tag:'Corporativo',platform:'Web / Win',approved:true,url:'https://www.microsoft.com/microsoft-365/sharepoint/collaboration'}
+].map((a,i)=>({...a,id:'base-'+i,manual:false,note:a.note||''}));
+let manualApps=loadJSON(STORAGE_KEYS.manual,[]),favorites=loadJSON(STORAGE_KEYS.favorites,[]),activeTag='Todos',sortAZ=true;
+const $=id=>document.getElementById(id),grid=$('grid');
+function loadJSON(k,f){try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}}function saveJSON(k,v){localStorage.setItem(k,JSON.stringify(v))}function allApps(){return[...defaultApps,...manualApps]}function safe(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>el.classList.remove('show'),2200)}function normalizeUrl(url){const u=url.trim();if(!u)return'';return/^https?:\/\//i.test(u)?u:'https://'+u}function autoIcon(tag){const map={Utilidades:'🧰',Navegadores:'🌐',Comunicación:'💬',Productividad:'📊',Seguridad:'🛡️',Desarrollo:'💻',Red:'📡',Corporativo:'🏢',IA:'🤖',Diseño:'🎨'};return map[tag]||'📦'}
+function renderFilters(){const tags=['Todos',...new Set(allApps().map(a=>a.tag).filter(Boolean).sort((a,b)=>a.localeCompare(b,'es')))],el=$('filters'),dl=$('tagOptions');el.innerHTML='';dl.innerHTML='';tags.filter(t=>t!=='Todos').forEach(t=>{const o=document.createElement('option');o.value=t;dl.appendChild(o)});tags.forEach(t=>{const b=document.createElement('button');b.className='filter-btn'+(t===activeTag?' active':'');b.textContent=t;b.onclick=()=>{activeTag=t;render()};el.appendChild(b)})}
+function render(){renderFilters();const q=$('search').value.toLowerCase().trim(),source=$('sourceFilter').value;let list=allApps();if(sortAZ)list=list.sort((a,b)=>a.name.localeCompare(b.name,'es'));grid.innerHTML='';let visible=0;list.forEach((app,i)=>{const fav=favorites.includes(app.id);const hay=[app.name,app.desc,app.tag,app.platform,app.url,app.note].join(' ').toLowerCase();const matchQ=!q||hay.includes(q);const matchTag=activeTag==='Todos'||app.tag===activeTag;const matchSource=source==='all'||(source==='base'&&!app.manual)||(source==='manual'&&app.manual)||(source==='favorites'&&fav);if(!(matchQ&&matchTag&&matchSource))return;visible++;const card=document.createElement('article');card.className='app-card';card.style.animationDelay=(Math.min(i,20)*0.012)+'s';card.innerHTML=`<div class="badge-row">${app.manual?'<span class="badge manual">Manual</span>':''}${app.approved?'<span class="badge">Aprobada</span>':''}</div><div class="card-top"><div class="app-icon" style="background:${safe(app.bg||'#E8F0FE')}">${safe(app.icon||autoIcon(app.tag))}</div><div class="app-meta"><div class="app-name" title="${safe(app.name)}">${safe(app.name)}</div><span class="app-tag">${safe(app.tag)}</span></div></div><div class="app-desc">${safe(app.desc)}</div>${app.note?`<div class="app-note">${safe(app.note)}</div>`:''}<div class="app-footer"><span class="app-platform">${safe(app.platform||'Web')}</span><div class="card-actions"><button class="star ${fav?'active':''}" title="Favorito" data-fav="${safe(app.id)}">★</button>${app.manual?`<button class="btn small" data-edit="${safe(app.id)}">Editar</button>`:''}<button class="btn small" data-copy="${safe(app.url)}">Copiar</button><a class="dl-btn" href="${safe(app.url)}" target="_blank" rel="noopener noreferrer">Descargar</a></div></div>`;grid.appendChild(card)});$('count-label').innerHTML=`<span>${visible}</span> aplicaciones · <span>${manualApps.length}</span> manuales · <span>${favorites.length}</span> favoritas`;$('header-count').textContent=visible+' APPS';$('no-results').style.display=visible===0?'block':'none'}
+function openModal(id){$(id).classList.add('show')}function closeModal(id){$(id).classList.remove('show')}function openAdd(){ $('modalTitle').textContent='Añadir aplicación';$('appForm').reset();$('appId').value='';$('bg').value='#E8F0FE';$('approved').checked=true;openModal('appModal')}function openEdit(id){const app=manualApps.find(a=>a.id===id);if(!app)return;$('modalTitle').textContent='Editar aplicación';['name','url','tag','platform','icon','bg','desc','note'].forEach(k=>$(k).value=app[k]||'');$('appId').value=app.id;$('approved').checked=app.approved!==false;openModal('appModal')}
+function renderManage(){const el=$('manageList');if(!manualApps.length){el.innerHTML='<div class="empty">No hay aplicaciones manuales todavía.</div>';return}el.innerHTML=manualApps.map(a=>`<div class="manage-item"><div class="manage-main"><div class="app-icon" style="width:34px;height:34px;border-radius:9px;background:${safe(a.bg)}">${safe(a.icon||autoIcon(a.tag))}</div><div><strong>${safe(a.name)}</strong><span>${safe(a.tag)} · ${safe(a.platform||'Web')}</span></div></div><div class="card-actions"><button class="btn small" data-edit="${safe(a.id)}">Editar</button><button class="btn small danger" data-delete="${safe(a.id)}">Borrar</button></div></div>`).join('')}
+$('appForm').addEventListener('submit',e=>{e.preventDefault();const app={id:$('appId').value||('manual-'+Date.now()),manual:true,name:$('name').value.trim(),url:normalizeUrl($('url').value),tag:$('tag').value.trim(),platform:$('platform').value.trim()||'Web',icon:$('icon').value.trim()||autoIcon($('tag').value.trim()),bg:$('bg').value||'#E8F0FE',desc:$('desc').value.trim(),note:$('note').value.trim(),approved:$('approved').checked};if(!app.name||!app.url||!app.tag||!app.desc){toast('Faltan campos obligatorios');return}if(!/^https?:\/\//i.test(app.url)){toast('URL no válida');return}const idx=manualApps.findIndex(a=>a.id===app.id);if(idx>=0)manualApps[idx]=app;else manualApps.push(app);saveJSON(STORAGE_KEYS.manual,manualApps);closeModal('appModal');render();renderManage();toast('Aplicación guardada')});
+document.addEventListener('click',e=>{const close=e.target.dataset.close;if(close)closeModal(close);const fav=e.target.dataset.fav;if(fav){favorites=favorites.includes(fav)?favorites.filter(x=>x!==fav):[...favorites,fav];saveJSON(STORAGE_KEYS.favorites,favorites);render()}const edit=e.target.dataset.edit;if(edit)openEdit(edit);const del=e.target.dataset.delete;if(del&&confirm('¿Borrar esta aplicación manual?')){manualApps=manualApps.filter(a=>a.id!==del);favorites=favorites.filter(x=>x!==del);saveJSON(STORAGE_KEYS.manual,manualApps);saveJSON(STORAGE_KEYS.favorites,favorites);render();renderManage();toast('Aplicación borrada')}const copy=e.target.dataset.copy;if(copy){navigator.clipboard?.writeText(copy).then(()=>toast('Enlace copiado')).catch(()=>prompt('Copia el enlace:',copy))}});
+$('addBtn').onclick=openAdd;$('manageBtn').onclick=()=>{renderManage();openModal('manageModal')};$('search').oninput=render;$('sourceFilter').onchange=render;$('sortBtn').onclick=()=>{sortAZ=!sortAZ;$('sortBtn').textContent=sortAZ?'Orden A-Z':'Orden original';render()};$('compactBtn').onclick=()=>{grid.classList.toggle('compact');localStorage.setItem(STORAGE_KEYS.compact,grid.classList.contains('compact')?'1':'0')};$('resetBtn').onclick=()=>{if(confirm('Esto borrará solo las aplicaciones manuales guardadas en este navegador.')){manualApps=[];favorites=favorites.filter(id=>!id.startsWith('manual-'));saveJSON(STORAGE_KEYS.manual,manualApps);saveJSON(STORAGE_KEYS.favorites,favorites);render();toast('Manuales restauradas')}};$('deleteManualsBtn').onclick=()=>{$('resetBtn').click();renderManage()};
+$('exportBtn').onclick=()=>{const data={version:2,exportedAt:new Date().toISOString(),manualApps,favorites};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='portal-apps-manuales.json';a.click();URL.revokeObjectURL(a.href);toast('JSON exportado')};$('importBtn').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());const imported=Array.isArray(data)?data:Array.isArray(data.manualApps)?data.manualApps:[];manualApps=imported.map(a=>({id:a.id&&String(a.id).startsWith('manual-')?a.id:'manual-'+crypto.randomUUID(),manual:true,name:a.name||'Sin nombre',desc:a.desc||'',icon:a.icon||autoIcon(a.tag),bg:a.bg||'#E8F0FE',tag:a.tag||'Otros',platform:a.platform||'Web',approved:a.approved!==false,url:normalizeUrl(a.url||''),note:a.note||''})).filter(a=>a.url);favorites=Array.isArray(data.favorites)?data.favorites:[];saveJSON(STORAGE_KEYS.manual,manualApps);saveJSON(STORAGE_KEYS.favorites,favorites);render();toast('JSON importado')}catch(err){toast('JSON no válido')}e.target.value=''};
+$('themeBtn').onclick=()=>{const cur=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=cur;localStorage.setItem(STORAGE_KEYS.theme,cur)};const savedTheme=localStorage.getItem(STORAGE_KEYS.theme);if(savedTheme)document.documentElement.dataset.theme=savedTheme;if(localStorage.getItem(STORAGE_KEYS.compact)==='1')grid.classList.add('compact');if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}render();
+</script>
 
-  // NAVEGADORES
-  { name:"Google Chrome",  desc:"Navegador rápido de Google",  icon:"🌐", bg:"#FEF3E2", tag:"Navegadores",  platform:"Win / Mac / Linux", rec:true,  url:"https://www.google.com/chrome/" },
-  { name:"Mozilla Firefox",  desc:"Navegador libre y privado",  icon:"🦊", bg:"#FFF0E0", tag:"Navegadores",  platform:"Win / Mac / Linux", rec:false, url:"https://www.mozilla.org/firefox/new/" },
-  { name:"Microsoft Edge",  desc:"Navegador corporativo de Microsoft",  icon:"🔷", bg:"#E8F0FE", tag:"Navegadores",  platform:"Win / Mac", rec:false, url:"https://www.microsoft.com/edge" },
-
-  // COMUNICACIÓN
-  { name:"Zoom",  desc:"Videollamadas y webinars",  icon:"📹", bg:"#E8F0FE", tag:"Comunicación",  platform:"Win / Mac", rec:true,  url:"https://zoom.us/download" },
-  { name:"Microsoft Teams",  desc:"Colaboración y chat corporativo",  icon:"💼", bg:"#EDE7F6", tag:"Comunicación",  platform:"Win / Mac", rec:true,  url:"https://www.microsoft.com/microsoft-teams/download-app" },
-  { name:"Slack",  desc:"Mensajería de equipo",  icon:"💬", bg:"#F0EDFF", tag:"Comunicación",  platform:"Win / Mac / Linux", rec:false, url:"https://slack.com/downloads" },
-  { name:"Skype",  desc:"Llamadas VoIP y videollamadas",  icon:"📞", bg:"#E3F2FD", tag:"Comunicación",  platform:"Win / Mac", rec:false, url:"https://www.skype.com/get-skype/" },
-  { name:"WhatsApp Desktop", desc:"WhatsApp para escritorio",  icon:"💚", bg:"#E8F5E9", tag:"Comunicación",  platform:"Win / Mac", rec:false, url:"https://www.whatsapp.com/download" },
-  { name:"Thunderbird",  desc:"Cliente de correo electrónico",  icon:"📧", bg:"#E3F2FD", tag:"Comunicación",  platform:"Win / Mac / Linux", rec:false, url:"https://www.thunderbird.net/es-ES/" },
-
-  // PRODUCTIVIDAD
-  { name:"Adobe Reader",  desc:"Visor oficial de PDFs",  icon:"📄", bg:"#FDEEEE", tag:"Productividad", platform:"Win / Mac", rec:true,  url:"https://get.adobe.com/reader/" },
-  { name:"LibreOffice",  desc:"Suite ofimática gratuita",  icon:"📊", bg:"#E8F5E9", tag:"Productividad", platform:"Win / Mac / Linux", rec:false, url:"https://www.libreoffice.org/download/download/" },
-  { name:"Foxit PDF Reader", desc:"Lector de PDF ligero y rápido",  icon:"📋", bg:"#FBE9E7", tag:"Productividad", platform:"Win / Mac", rec:false, url:"https://www.foxit.com/pdf-reader/" },
-  { name:"Notion",  desc:"Notas, wikis y bases de datos",  icon:"📓", bg:"#F5F5F5", tag:"Productividad", platform:"Win / Mac", rec:false, url:"https://www.notion.so/desktop" },
-  { name:"Obsidian",  desc:"Notas en Markdown con grafos",  icon:"🪨", bg:"#EDE7F6", tag:"Productividad", platform:"Win / Mac / Linux", rec:false, url:"https://obsidian.md/download" },
-  { name:"VLC",  desc:"Reproductor multimedia universal",  icon:"🎬", bg:"#FFF3E0", tag:"Productividad", platform:"Win / Mac / Linux", rec:false, url:"https://www.videolan.org/vlc/" },
-
-  // SEGURIDAD
-  { name:"KeePass",  desc:"Gestor de contraseñas local",  icon:"🔑", bg:"#FFF9C4", tag:"Seguridad",  platform:"Windows", rec:true,  url:"https://keepass.info/download.html" },
-  { name:"Bitwarden",  desc:"Gestor de contraseñas en la nube",  icon:"🛡️", bg:"#E8EAF6", tag:"Seguridad",  platform:"Win / Mac / Linux", rec:true,  url:"https://bitwarden.com/download/" },
-  { name:"Malwarebytes",  desc:"Antimalware bajo demanda",  icon:"🦠", bg:"#E0F7FA", tag:"Seguridad",  platform:"Win / Mac", rec:false, url:"https://www.malwarebytes.com/mwb-download" },
-  { name:"VeraCrypt",  desc:"Cifrado de discos y contenedores",  icon:"🔐", bg:"#EFEBE9", tag:"Seguridad",  platform:"Win / Mac / Linux", rec:false, url:"https://www.veracrypt.fr/en/Downloads.html" },
-  { name:"Wireshark",  desc:"Análisis de tráfico de red",  icon:"🌊", bg:"#E3F2FD", tag:"Seguridad",  platform:"Win / Mac / Linux", rec:false, url:"https://www.wireshark.org/download.html" },
-
-  // DESARROLLO
-  { name:"Visual Studio Code",desc:"Editor de código gratuito de Microsoft",icon:"💻",bg:"#E3F2FD",tag:"Desarrollo",  platform:"Win / Mac / Linux", rec:true,  url:"https://code.visualstudio.com/download" },
-  { name:"Notepad++",  desc:"Editor de texto avanzado",  icon:"📝", bg:"#E8F5E9", tag:"Desarrollo",  platform:"Windows", rec:false, url:"https://notepad-plus-plus.org/downloads/" },
-  { name:"Git",  desc:"Control de versiones distribuido",  icon:"🌿", bg:"#FCE4EC", tag:"Desarrollo",  platform:"Win / Mac / Linux", rec:true,  url:"https://git-scm.com/downloads" },
-  { name:"Python",  desc:"Lenguaje de programación versátil",  icon:"🐍", bg:"#E8F5E9", tag:"Desarrollo",  platform:"Win / Mac / Linux", rec:false, url:"https://www.python.org/downloads/" },
-  { name:"Node.js",  desc:"Entorno de ejecución JavaScript",  icon:"🟢", bg:"#E8F5E9", tag:"Desarrollo",  platform:"Win / Mac / Linux", rec:false, url:"https://nodejs.org/es/download/" },
-  { name:"PuTTY",  desc:"Cliente SSH y Telnet",  icon:"⌨️", bg:"#EFEBE9", tag:"Desarrollo",  platform:"Windows", rec:false, url:"https://www.putty.org/" },
-  { name:"WinSCP",  desc:"Cliente FTP y SFTP gráfico",  icon:"📡", bg:"#F3E5F5", tag:"Desarrollo",  platform:"Windows", rec:false, url:"https://winscp.net/eng/download.php" },
-  { name:"Postman",  desc:"Testing y documentación de APIs",  icon:"🚀", bg:"#FBE9E7", tag:"Desarrollo",  platform:"Win / Mac / Linux", rec:false, url:"https://www.postman.com/downloads/" },
-  { name:"Docker Desktop",  desc:"Contenedores y virtualización",  icon:"🐳", bg:"#E3F2FD", tag:"Desarrollo",  platform:"Win / Mac", rec:false, url:"https://www.docker.com/products/docker-desktop/" },
-  { name:"DBeaver",  desc:"Cliente universal de bases de datos",  icon:"🗄️", bg:"#E8F4FD", tag:"Desarrollo",  platform:"Win / Mac / Linux", rec:false, url:"https://dbeaver.io/download/" },
-
-  // RED
-  { name:"Nmap",  desc:"Escáner de red y puertos",  icon:"📡", bg:"#E0F7FA", tag:"Red",  platform:"Win / Mac / Linux", rec:false, url:"https://nmap.org/download.html" },
-  { name:"Advanced IP Scanner",desc:"Escáner de red local",  icon:"🔭", bg:"#F1F8E9", tag:"Red",  platform:"Windows", rec:true,  url:"https://www.advanced-ip-scanner.com/es/" },
-  { name:"Angry IP Scanner", desc:"Escaneo rápido de IPs",  icon:"⚡", bg:"#FFF9C4", tag:"Red",  platform:"Win / Mac / Linux", rec:false, url:"https://angryip.org/download/" },
-  { name:"FileZilla",  desc:"Cliente FTP multiplataforma",  icon:"📂", bg:"#FBE9E7", tag:"Red",  platform:"Win / Mac / Linux", rec:false, url:"https://filezilla-project.org/download.php" },
-  // CORPORATIVO
-  { name:"Citrix Workspace",   desc:"Acceso a escritorios y apps virtuales",   icon:"🏢", bg:"#E3F2FD", tag:"Corporativo",  platform:"Win / Mac / Linux", rec:false, url:"https://www.citrix.com/downloads/workspace-app/" },
-  { name:"Cisco Webex",        desc:"Videollamadas y reuniones corporativas",   icon:"🎥", bg:"#E8F0FE", tag:"Corporativo",  platform:"Win / Mac",         rec:true,  url:"https://www.webex.com/downloads.html" },
-  { name:"Microsoft 365",      desc:"Word, Excel, PowerPoint y más",            icon:"🟦", bg:"#E8F0FE", tag:"Corporativo",  platform:"Win / Mac",         rec:true,  url:"https://www.microsoft.com/microsoft-365/download-office" },
-  { name:"GlobalProtect VPN",  desc:"VPN corporativa de Palo Alto Networks",   icon:"🔒", bg:"#EDE7F6", tag:"Corporativo",  platform:"Win / Mac",         rec:true,  url:"https://www.paloaltonetworks.com/resources/datasheets/globalprotect" },
-  { name:"OneDrive",           desc:"Almacenamiento y sincronización en la nube", icon:"☁️", bg:"#E3F2FD", tag:"Corporativo", platform:"Win / Mac",        rec:false, url:"https://www.microsoft.com/microsoft-365/onedrive/download" },
-  { name:"SharePoint",         desc:"Portal colaborativo de Microsoft",         icon:"🗂️", bg:"#E8F0FE", tag:"Corporativo",  platform:"Web / Win",         rec:false, url:"https://www.microsoft.com/microsoft-365/sharepoint/collaboration" },
-
-];
-
-const STORAGE_KEY = "portal_apps_manuales_v2";
-let manualApps = loadManualApps();
-let apps = [];
-let activeTag = "Todos";
-
-const filtersEl = document.getElementById("filters");
-const grid = document.getElementById("grid");
-const searchInput = document.getElementById("search");
-const modal = document.getElementById("app-modal");
-const form = document.getElementById("manual-app-form");
-const iconDownload = `<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
-
-function uid() {
-  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
-  return "app_" + Date.now() + "_" + Math.random().toString(16).slice(2);
-}
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>'"]/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    "'": "&#39;",
-    '"': "&quot;"
-  }[char]));
-}
-
-function loadManualApps() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed.map(a => normalizeApp(a, true)).filter(a => a.name && a.url) : [];
-  } catch (error) {
-    console.warn("No se pudieron cargar las apps manuales", error);
-    return [];
-  }
-}
-
-function saveManualApps() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(manualApps));
-}
-
-function normalizeApp(app, manual = true) {
-  return {
-    id: app.id || uid(),
-    name: String(app.name || "").trim(),
-    desc: String(app.desc || "").trim(),
-    icon: String(app.icon || "🔗").trim() || "🔗",
-    bg: String(app.bg || "#E8F0FE").trim(),
-    tag: String(app.tag || "Otros").trim() || "Otros",
-    platform: String(app.platform || "Web").trim() || "Web",
-    rec: Boolean(app.rec),
-    url: String(app.url || "").trim(),
-    manual: Boolean(manual)
-  };
-}
-
-function rebuildApps() {
-  const base = defaultApps.map(a => normalizeApp(a, false));
-  apps = [...base, ...manualApps];
-}
-
-function getAllTags() {
-  return ["Todos", ...new Set(apps.map(a => a.tag).filter(Boolean))];
-}
-
-function renderFilters() {
-  const allTags = getAllTags();
-  if (!allTags.includes(activeTag)) activeTag = "Todos";
-  filtersEl.innerHTML = "";
-  allTags.forEach(tag => {
-    const btn = document.createElement("button");
-    btn.className = "filter-btn" + (tag === activeTag ? " active" : "");
-    btn.textContent = tag;
-    btn.addEventListener("click", () => {
-      activeTag = tag;
-      renderFilters();
-      filterApps();
-    });
-    filtersEl.appendChild(btn);
-  });
-}
-
-function renderCards() {
-  grid.innerHTML = "";
-  apps.forEach((app, i) => {
-    const card = document.createElement("div");
-    card.className = "app-card";
-    card.dataset.name = `${app.name} ${app.desc} ${app.platform} ${app.tag}`.toLowerCase();
-    card.dataset.tag = app.tag;
-    card.style.animationDelay = (i * 0.012) + "s";
-    card.innerHTML = `
-      ${app.rec ? '<span class="badge-rec">★ Recomendado</span>' : ''}
-      <div class="card-top">
-        <div class="app-icon" style="background:${escapeHtml(app.bg)}">${escapeHtml(app.icon)}</div>
-        <div class="app-meta">
-          <div class="app-name" title="${escapeHtml(app.name)}">${escapeHtml(app.name)}</div>
-          <span class="app-tag">${escapeHtml(app.tag)}</span>
-          ${app.manual ? '<span class="manual-mark">Manual</span>' : ''}
-        </div>
-      </div>
-      <div class="app-desc">${escapeHtml(app.desc)}</div>
-      <div class="app-footer"><span class="app-platform">${escapeHtml(app.platform)}</span></div>
-      <a class="dl-btn" href="${escapeHtml(app.url)}" target="_blank" rel="noopener noreferrer">${iconDownload} Descargar</a>
-      ${app.manual ? `<button class="delete-manual-btn" type="button" data-id="${escapeHtml(app.id)}">Eliminar manual</button>` : ''}
-    `;
-    grid.appendChild(card);
-  });
-
-  grid.querySelectorAll(".delete-manual-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (!confirm("¿Eliminar esta aplicación manual?")) return;
-      manualApps = manualApps.filter(app => app.id !== btn.dataset.id);
-      saveManualApps();
-      boot();
-    });
-  });
-}
-
-function filterApps() {
-  const q = searchInput.value.toLowerCase().trim();
-  const cards = grid.querySelectorAll(".app-card");
-  let visible = 0;
-  cards.forEach(card => {
-    const matchTag = activeTag === "Todos" || card.dataset.tag === activeTag;
-    const matchQ = !q || card.dataset.name.includes(q);
-    const show = matchTag && matchQ;
-    card.classList.toggle("hidden", !show);
-    if (show) visible++;
-  });
-  document.getElementById("count-label").innerHTML = `<span>${visible}</span> aplicaciones · ${manualApps.length} manuales`;
-  document.getElementById("header-count").textContent = visible + " APPS";
-  document.getElementById("no-results").style.display = visible === 0 ? "block" : "none";
-}
-
-function openModal() {
-  modal.classList.add("show");
-  modal.setAttribute("aria-hidden", "false");
-  setTimeout(() => document.getElementById("app-name").focus(), 0);
-}
-
-function closeModal() {
-  modal.classList.remove("show");
-  modal.setAttribute("aria-hidden", "true");
-  form.reset();
-  document.getElementById("app-icon").value = "🔗";
-  document.getElementById("app-bg").value = "#E8F0FE";
-  document.getElementById("app-platform").value = "Windows";
-}
-
-function boot() {
-  rebuildApps();
-  renderFilters();
-  renderCards();
-  filterApps();
-}
-
-document.getElementById("add-app-btn").addEventListener("click", openModal);
-document.getElementById("close-modal-btn").addEventListener("click", closeModal);
-document.getElementById("cancel-modal-btn").addEventListener("click", closeModal);
-modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("show")) closeModal(); });
-searchInput.addEventListener("input", filterApps);
-
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const data = new FormData(form);
-  const app = normalizeApp({
-    name: data.get("name"),
-    desc: data.get("desc"),
-    icon: data.get("icon"),
-    bg: data.get("bg"),
-    tag: data.get("tag"),
-    platform: data.get("platform"),
-    rec: data.get("rec") === "on",
-    url: data.get("url")
-  }, true);
-
-  if (!app.name || !app.desc || !app.url) {
-    alert("Rellena nombre, descripción y URL.");
-    return;
-  }
-
-  manualApps.push(app);
-  saveManualApps();
-  closeModal();
-  boot();
+<script>
+(function(){
+const saved=localStorage.getItem('theme')||'dark';
+document.body.setAttribute('data-theme',saved);
+const btn=document.getElementById('themeToggle');
+function upd(){btn.textContent=document.body.getAttribute('data-theme')==='dark'?'☀️ Claro':'🌙 Oscuro';}
+upd();
+btn?.addEventListener('click',()=>{
+ const t=document.body.getAttribute('data-theme')==='dark'?'light':'dark';
+ document.body.setAttribute('data-theme',t);
+ localStorage.setItem('theme',t);
+ upd();
 });
-
-document.getElementById("export-apps-btn").addEventListener("click", () => {
-  const blob = new Blob([JSON.stringify(manualApps, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "apps-manuales.json";
-  a.click();
-  URL.revokeObjectURL(url);
-});
-
-document.getElementById("import-apps-input").addEventListener("change", async e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  try {
-    const imported = JSON.parse(await file.text());
-    if (!Array.isArray(imported)) throw new Error("El JSON debe contener un array de aplicaciones.");
-    const normalized = imported.map(app => normalizeApp(app, true)).filter(app => app.name && app.url);
-    manualApps = [...manualApps, ...normalized];
-    saveManualApps();
-    boot();
-    alert(`Importadas ${normalized.length} aplicaciones.`);
-  } catch (error) {
-    alert("No se pudo importar el JSON: " + error.message);
-  } finally {
-    e.target.value = "";
-  }
-});
-
-document.getElementById("clear-manual-btn").addEventListener("click", () => {
-  if (!manualApps.length) {
-    alert("No hay aplicaciones manuales para borrar.");
-    return;
-  }
-  if (confirm("¿Borrar todas las aplicaciones manuales? Las apps base se conservarán.")) {
-    manualApps = [];
-    saveManualApps();
-    boot();
-  }
-});
-
-boot();
+})();
 </script>
 </body>
 </html>
